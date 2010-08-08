@@ -1,0 +1,15 @@
+       
+
+           RELEASE HISTORY OF THE "care" PACKAGE
+
+
+
+
+Version 1.0:
+
+- Public release on 8 August 2010.
+
+  This package contains functions for estimation of CAR scores, for
+  performing variable selection using CAR scores, and for computing
+  corresponding regression cofficients.
+
