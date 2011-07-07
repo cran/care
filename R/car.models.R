@@ -1,8 +1,8 @@
-### care.R  (2010-08-06)
+### car.models.R  (2011-07-04)
 ###
 ###    CAR regression models
 ###
-### Copyright 2010 Korbinian Strimmer
+### Copyright 2010-11 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `care' library for R and related languages.
@@ -24,7 +24,7 @@
 
 # CAR regression models
 
-care = function(x, y, numpred, estimator=c("empirical", "shrinkage"), verbose=TRUE)
+car.models = function(x, y, numpred, shrink=TRUE, verbose=TRUE)
 {
   p = dim(x)[2]
   m = length(numpred)
@@ -35,11 +35,12 @@ care = function(x, y, numpred, estimator=c("empirical", "shrinkage"), verbose=TR
   if ( is.null(xnames) ) 
     xnames = paste("X", 1:p, sep="")
   colnames(coeff) = c("(Intercept)", xnames)
-  
+  R2 = numeric(m)
+  names(R2) = rownames(coeff)
   
   # estimate CAR score
   if(verbose) cat("Determine CAR ordering of the variables\n")
-  car = carscore(x,y, estimator=estimator, verbose=verbose)
+  car = carscore(x,y, shrink=shrink, verbose=verbose)
   # order variables by squared CAR scores
   ocar = order(car^2, decreasing=TRUE)
   if(verbose) cat("\nDetermine regression coefficients\n")
@@ -50,12 +51,13 @@ care = function(x, y, numpred, estimator=c("empirical", "shrinkage"), verbose=TR
     # keep the best variables
     idx = ocar[1:(numpred[i])]
 
-    fit = fitlm(x[,idx, drop=FALSE], y, estimator=estimator, verbose=verbose)
-    coeff[i, 1+idx] = fit$b
-    coeff[i, 1] = fit$a
+    fit = slm(x[,idx, drop=FALSE], y, shrink=shrink, verbose=verbose)
+    coeff[i, 1+idx] = fit$coefficients[-1] # predictors
+    coeff[i, 1] = fit$coefficients[1] # intercept
+    R2[i] = fit$R2
   }
 
-  return(coeff)
+  return(list(coefficients=coeff, R2=R2))
 }
 
 

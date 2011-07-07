@@ -28,14 +28,15 @@ the age of each patient is provided.
 \source{
 The orginal data are available from \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1572} and are described in Lu et al. (2004).
 The selected 403 genes result from prescreening and preprocessing as
-described in Zuber and Strimmer (2010). 
+described in Zuber and Strimmer (2011). 
 }
 
 \references{
 Lu, T., et al. 2004. Gene regulation and DNA damage in the ageing human brain.
 Nature 429:883--891.
 
-Zuber, V., and K. Strimmer. 2010.  Variable importance and model selection by decorrelation.
+Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
+variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: in press. 
 \url{http://arxiv.org/abs/1007.5516}.
 }
 

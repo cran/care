@@ -3,6 +3,18 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.0:
+
+- depends now on R 2.10.0 and corpcor version 1.6.0
+- much faster computation of CAR scores in function carscore()
+  due to the use of crossprod.powcor.shrink() in corpcor package
+- syntax of carscore() function now the same as the catscore() 
+  function from the sda package
+- fitlm() renamed to slm()
+- slm() is now also much faster due to the use of the 
+  crossprod.powcor.shrink() from the corpcor packages 
+- new predict.slm() function
+- car.models() now also shows the estimated R2 for each model.
 
 
 Version 1.0:

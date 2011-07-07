@@ -1,8 +1,8 @@
-### carescore.R  (2010-08-06)
+### carscore.R  (2011-07-03)
 ###
 ###    Estimate CAR scores and marginal correlations
 ###
-### Copyright 2010 Korbinian Strimmer
+### Copyright 2010-2011 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `care' library for R and related languages.
@@ -27,53 +27,42 @@
 # estimate car scores 
 # (and marginal correlations if diagonal=TRUE)
 
-carscore = function(x, y, estimator=c("empirical", "shrinkage"), 
-               diagonal=FALSE, verbose=TRUE)
+carscore = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
 {
-  estimator = match.arg(estimator)
-  
-  n = dim(x)[1]
-  p = dim(x)[2]
-  
-  if ( n <= p+1 & estimator=="empirical" & diagonal == FALSE)
-  {
-    warning("Singular empirical estimator, using shrinkage estimator instead.\n") 
-    estimator="shrinkage"
-  }
+  n = dim(Xtrain)[1]
+  p = dim(Xtrain)[2]
 
   #####################################
 
-  if (estimator=="empirical")
+  omega = cor(Xtrain, Ytrain)  # marginal correlations
+  if (shrink) # shrinkage estimator
   {
-    Rxy = cor(x, y)
-    if (diagonal==FALSE)
-    {
-      Rxx.invroot = mpower(cor(x), -1/2)
-    }
-  }
-
-  if (estimator=="shrinkage")
-  {
-    # regularize the joint correlation matrix  y and x combined
-    w = rep(1/n, n)
+    # regularize the joint correlation matrix  Ytrain and Xtrain combined
     if(verbose) cat("Estimating optimal shrinkage intensity lambda (correlation matrix): ")
-    lambda = pvt.corlambda(scale(cbind(x,y)), w, 0)
+    lambda = pvt.corlambda(scale(cbind(Ytrain,Xtrain)), rep(1/n, n), 0)
     if(verbose) cat(round(lambda, 4), "\n")
 
-    Rxy = (1-lambda)* cor(x, y)
-    if (diagonal==FALSE)
-    {
-      Rxx.invroot = powcor.shrink(x, alpha=-1/2, 
-                        lambda=lambda, w=w, verbose=FALSE)
-    }
+    omega = (1-lambda)*omega # shrink marginal correlations
+  }
+  else # empirical estimator
+  {
+    lambda = 0
   }
 
   if (diagonal==FALSE)
-    omega = as.vector( Rxx.invroot %*% Rxy )   # car score
-  else
-    omega = as.vector( Rxy )                   # marginal correlations
+  {
+      # car score
+      omega = crossprod.powcor.shrink(Xtrain, omega, alpha=-1/2, lambda=lambda, verbose=FALSE)
+  }
 
-  names(omega) = colnames(x)
+  omega = as.vector(omega)
+  names(omega) = colnames(Xtrain)
+  if(shrink)
+  {
+    class(omega) = "shrinkage"
+    attr(omega, "lambda") = lambda
+    attr(omega, "lambda.estimated") = TRUE
+  }
 
   return( omega )
 }
