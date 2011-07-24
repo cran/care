@@ -1,5 +1,5 @@
 
-### slm.R  (2011-07-04)
+### slm.R  (2011-07-23)
 ###
 ###    Fit regression coefficients by plugin of (shrinkage or empirical) 
 ###    estimates of correlations and variances
@@ -25,31 +25,30 @@
 
 
 
-slm = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
+slm = function(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
 {
   n = dim(Xtrain)[1]
   p = dim(Xtrain)[2]
   yx = cbind(Ytrain,Xtrain)
   mu = apply(yx, 2, mean)
 
-  mcor = cor(Xtrain, Ytrain)  # marginal correlations
-  if (shrink)
+  # regularize the joint correlation matrix  y and x combined
+  if(missing(lambda))
   {
-    # regularize the joint correlation matrix  y and x combined
     if(verbose) cat("Estimating optimal shrinkage intensity lambda (correlation matrix): ")
     lambda = pvt.corlambda(scale(yx), rep(1/n, n), 0)
     if(verbose) cat(round(lambda, 4), "\n")
-    mcor = (1-lambda)*mcor # shrink marginal correlations
-
-    v = var.shrink(yx, verbose=verbose)
-    lambda.var = attr(v, "lambda.var")
   }
   else
   {
-    lambda=0
-    lambda.var=0
-    v = apply(yx, 2, var)      
+     if(verbose) cat("Specified shrinkage intensity lambda (correlation matrix): ", round(lambda, 4), "\n")
   }
+
+  mcor = (1-lambda)*cor(Xtrain, Ytrain) # marginal correlations
+
+  v = var.shrink(yx, lambda.var=lambda.var, verbose=verbose)
+  lambda.var = attr(v, "lambda.var")
+  
   regularization = c(lambda, lambda.var)
   names(regularization) = c("lambda", "lambda.var")
   sdy = sqrt(v[1])
@@ -64,7 +63,8 @@ slm = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
     bstd = crossprod.powcor.shrink(Xtrain, mcor, alpha=-1, lambda=lambda, verbose=FALSE)
   }
 
-  R2 = as.vector(crossprod(mcor, bstd))         # proportion of explained variance
+  R2 = as.vector(crossprod(mcor, bstd))   # proportion of explained variance  (diagonal=FALSE)
+                                          # or sum of squared marginal correlations (diagonal=TRUE)
 
   b = bstd*sdy/sdx                   # regression coefficients
   a = mu[1] - sum(b * mu[-1])        # intercept
@@ -78,7 +78,7 @@ slm = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
   std.coefficients = c(0, bstd)
   names(std.coefficients) = c("(Intercept)", xnames)
 
-  res = list(regularization=regularization, 
+  res = list(regularization=regularization, diagonal=diagonal, 
           std.coefficients=std.coefficients,
           coefficients=coefficients, R2=R2) 
   class(res) = "slm"

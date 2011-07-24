@@ -1,4 +1,4 @@
-### carscore.R  (2011-07-03)
+### carscore.R  (2011-07-23)
 ###
 ###    Estimate CAR scores and marginal correlations
 ###
@@ -27,28 +27,27 @@
 # estimate car scores 
 # (and marginal correlations if diagonal=TRUE)
 
-carscore = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
+carscore = function(Xtrain, Ytrain, lambda, diagonal=FALSE, verbose=TRUE)
 {
   n = dim(Xtrain)[1]
   p = dim(Xtrain)[2]
 
   #####################################
 
-  omega = cor(Xtrain, Ytrain)  # marginal correlations
-  if (shrink) # shrinkage estimator
+  if( missing(lambda) )
   {
+    lambda.estimated = TRUE
     # regularize the joint correlation matrix  Ytrain and Xtrain combined
     if(verbose) cat("Estimating optimal shrinkage intensity lambda (correlation matrix): ")
     lambda = pvt.corlambda(scale(cbind(Ytrain,Xtrain)), rep(1/n, n), 0)
     if(verbose) cat(round(lambda, 4), "\n")
-
-    omega = (1-lambda)*omega # shrink marginal correlations
   }
-  else # empirical estimator
+  else
   {
-    lambda = 0
+    lambda.estimated = FALSE
   }
-
+  omega = (1-lambda)*cor(Xtrain, Ytrain) # marginal correlations
+  
   if (diagonal==FALSE)
   {
       # car score
@@ -57,12 +56,12 @@ carscore = function(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
 
   omega = as.vector(omega)
   names(omega) = colnames(Xtrain)
-  if(shrink)
-  {
+  #if(lambda > 0)
+  #{
     class(omega) = "shrinkage"
     attr(omega, "lambda") = lambda
-    attr(omega, "lambda.estimated") = TRUE
-  }
+    attr(omega, "lambda.estimated") = lambda.estimated
+  #}
 
   return( omega )
 }

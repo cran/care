@@ -36,8 +36,8 @@ Lu, T., et al. 2004. Gene regulation and DNA damage in the ageing human brain.
 Nature 429:883--891.
 
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
-variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: in press. 
-\url{http://arxiv.org/abs/1007.5516}.
+variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
+\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
 }
 
 

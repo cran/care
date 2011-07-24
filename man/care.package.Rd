@@ -25,13 +25,13 @@ The name of the package refers to \bold{CAR}
 \references{
   
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
-variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: in press. 
-\url{http://arxiv.org/abs/1007.5516}.
+variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
+\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
 
   Website: \url{http://strimmerlab.org/software/care/}
 }
 \keyword{multivariate}
 \seealso{
-\code{\link{slm}}, \code{\link{carscore}}, \code{\link{car.models}}, 
+\code{\link{carscore}}, \code{\link{slm}}, \code{\link{slm.models}}, 
  \code{\link{efron2004}}, \code{\link{lu2004}}.
 }

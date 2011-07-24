@@ -3,20 +3,23 @@
 
 \title{Estimate CAR Scores and Marginal Correlations}
 \usage{
-carscore(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
+carscore(Xtrain, Ytrain, lambda, diagonal=FALSE, verbose=TRUE)
 }
 \arguments{
-  \item{Xtrain}{matrix of predictors (columns correspond to variables).}
+  \item{Xtrain}{Matrix of predictors (columns correspond to variables).}
   
-  \item{Ytrain}{univariate response variable.}
+  \item{Ytrain}{Univariate response variable.}
 
-\item{diagonal}{for \code{diagonal=FALSE} (the default) CAR scores are computed;
+  \item{lambda}{The correlation shrinkage intensity (range 0-1).  
+          If not specified (the default) it is estimated using an
+          analytic formula from Sch\"afer and Strimmer (2005).  For \code{lambda=0}
+      the empirical correlations are used.}
+
+\item{diagonal}{For \code{diagonal=FALSE} (the default) CAR scores are computed;
                 otherwise with \code{diagonal=TRUE} marginal correlations.   
 	     }
 
- \item{shrink}{use a shrinkage estimator of correlations (the default) or the standard empirical estimator.}
-
-\item{verbose}{if \code{verbose=TRUE} then the shrinkage intensity 
+\item{verbose}{If \code{verbose=TRUE} then the shrinkage intensity 
                 used in estimating the shrinkage correlation matrix is reported.
 	     }
 
@@ -29,7 +32,7 @@ carscore(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
 
 \value{
   \code{carscore} returns
-  a vector containing the CAR scores (or marginal correlations).
+  a vector containing the CAR scores (or marginal correlations for \code{diagonal=TRUE}).
 }
 
 \details{
@@ -51,14 +54,14 @@ carscore(Xtrain, Ytrain, diagonal=FALSE, shrink=TRUE, verbose=TRUE)
 \author{
   Verena Zuber and Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link{car.models}}, \code{\link[sda]{catscore}}.}
+\seealso{\code{\link[sda]{catscore}}, \code{\link{slm.models}}.}
 
 
 \references{
 
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
-variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: in press. 
-\url{http://arxiv.org/abs/1007.5516}.
+variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
+\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
 }
 
 
@@ -73,7 +76,7 @@ data(efron2004)
 xnames = colnames(efron2004$x)
 n = dim(efron2004$x)[1]
 
-car = carscore(efron2004$x, efron2004$y, shrink=FALSE)
+car = carscore(efron2004$x, efron2004$y, lambda=0)
 car
 
 # compare orderings
@@ -89,13 +92,13 @@ xnames[order(pcor^2, decreasing=TRUE)]
 
 # compare with ordering by marginal correlations 
 mcor = cor(efron2004$y,efron2004$x)
-#mcor = carscore(efron2004$x, efron2004$y, diagonal=TRUE, shrink=FALSE)
+#mcor = carscore(efron2004$x, efron2004$y, diagonal=TRUE, lambda=0)
 xnames[order(mcor^2, decreasing=TRUE)]
 # "bmi" "s5"  "bp"  "s4"  "s3"  "s6"  "s1"  "age" "s2"  "sex"
 
 # decomposition of R^2
 sum(car^2)
-slm(efron2004$x, efron2004$y, shrink=FALSE)$R2
+slm(efron2004$x, efron2004$y, lambda=0, lambda.var=0)$R2
 
 # pvalues for empirical CAR scores
 pval = 1-pbeta(car^2, shape1=1/2, shape2=(n-2)/2)

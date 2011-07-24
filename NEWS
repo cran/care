@@ -3,6 +3,15 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.1:
+
+- reference to Zuber and Strimmer (2011) added.
+- lambda and lambda.var options instead of shrink=TRUE/FALSE
+  to follow the conventions in the corpcor package.
+- car.models() renamed to slm.models()
+- new function make.predlist().
+
+
 Version 1.1.0:
 
 - depends now on R 2.10.0 and corpcor version 1.6.0
