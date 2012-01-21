@@ -1,0 +1,9 @@
+export(
+"carscore",
+"make.predlist",
+"predict.slm",
+"slm",
+"slm.models"
+)
+
+

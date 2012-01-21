@@ -1,10 +1,10 @@
 
-### slm.R  (2011-07-23)
+### slm.R  (2012-01-21)
 ###
 ###    Fit regression coefficients by plugin of (shrinkage or empirical) 
 ###    estimates of correlations and variances
 ###
-### Copyright 2006-2011 Korbinian Strimmer
+### Copyright 2006-2012 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `care' library for R and related languages.
@@ -35,9 +35,7 @@ slm = function(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
   # regularize the joint correlation matrix  y and x combined
   if(missing(lambda))
   {
-    if(verbose) cat("Estimating optimal shrinkage intensity lambda (correlation matrix): ")
-    lambda = pvt.corlambda(scale(yx), rep(1/n, n), 0)
-    if(verbose) cat(round(lambda, 4), "\n")
+    lambda = estimate.lambda( yx, verbose=verbose )
   }
   else
   {

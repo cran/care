@@ -1,8 +1,8 @@
-### carscore.R  (2011-07-23)
+### carscore.R  (2012-01-21)
 ###
 ###    Estimate CAR scores and marginal correlations
 ###
-### Copyright 2010-2011 Verena Zuber and Korbinian Strimmer
+### Copyright 2010-2012 Verena Zuber and Korbinian Strimmer
 ###
 ###
 ### This file is part of the `care' library for R and related languages.
@@ -38,9 +38,7 @@ carscore = function(Xtrain, Ytrain, lambda, diagonal=FALSE, verbose=TRUE)
   {
     lambda.estimated = TRUE
     # regularize the joint correlation matrix  Ytrain and Xtrain combined
-    if(verbose) cat("Estimating optimal shrinkage intensity lambda (correlation matrix): ")
-    lambda = pvt.corlambda(scale(cbind(Ytrain,Xtrain)), rep(1/n, n), 0)
-    if(verbose) cat(round(lambda, 4), "\n")
+    lambda = estimate.lambda( cbind(Ytrain,Xtrain), verbose=verbose )
   }
   else
   {

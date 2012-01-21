@@ -5,6 +5,12 @@
 
 Version 1.1.1:
 
+- NAMESPACE file added.
+- now requires corpcor version 1.6.2.
+
+
+Version 1.1.1:
+
 - reference to Zuber and Strimmer (2011) added.
 - lambda and lambda.var options instead of shrink=TRUE/FALSE
   to follow the conventions in the corpcor package.
