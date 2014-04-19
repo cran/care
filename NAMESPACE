@@ -5,5 +5,7 @@ export(
 "slm",
 "slm.models"
 )
-
+import(
+"corpcor"
+)
 
