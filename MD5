@@ -1,6 +1,6 @@
-5678f073d1f681dffa83a4653161396a *DESCRIPTION
+d2d4a2a5729892bd82a4246b8287582b *DESCRIPTION
 996942360928ec6444ce3a3d4ed20f67 *NAMESPACE
-9038e18022c1d0a599a591e45ed2fbef *NEWS
+c55adfa960fc780c91d1906c8b331f76 *NEWS
 3a31a7ba4db8d589092b1a5c1ac22d91 *R/carscore.R
 5c2eb56f7d0f1fee1190363563bdc18e *R/predict.slm.R
 aa8fed2ffdd8f07b2fc205df218bfa2e *R/slm.R
@@ -9,7 +9,7 @@ c2af00f05ae3f38ad923ba20ca3176ac *R/slm.models.R
 317a75332d8f5e588be58f3e7f66ebca *data/lu2004.rda
 8c224a5f66292a8341e2d3b85d897879 *inst/doc/brain.R
 2f728deaaade94dce3e5c1b5ce365102 *inst/doc/diabetes.R
-f61c6546c30b351d7838e9a0966107fd *inst/doc/index.html
+0b6b42ed145a6aacdc0cb88a69880fbe *inst/doc/index.html
 b3796fca9e830de71c81a0812af88a25 *man/care-internal.Rd
 70548469a3175fa4d097b63ce7ef5cff *man/care.package.Rd
 20f4d6b6f047c1a9bd5718599759af3d *man/carscore.Rd

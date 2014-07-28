@@ -3,6 +3,12 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.5:
+
+- change of maintainer email address.
+- corrections to index.html file in inst/doc folder.
+
+
 Version 1.1.4:
 
 - added import statement in NAMESPACE file to address warnings in R
