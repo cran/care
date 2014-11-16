@@ -3,6 +3,13 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.6:
+
+- the example R scripts (brain and diabetes data) are now provided in 
+  R notebook format
+- change of maintainer email address
+
+
 Version 1.1.5:
 
 - change of maintainer email address.
