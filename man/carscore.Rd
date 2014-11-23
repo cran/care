@@ -54,7 +54,7 @@ carscore(Xtrain, Ytrain, lambda, diagonal=FALSE, verbose=TRUE)
 \author{
   Verena Zuber and Korbinian Strimmer (\url{http://strimmerlab.org}).
 }
-\seealso{\code{\link[sda]{catscore}}, \code{\link{slm.models}}.}
+\seealso{\code{\link[sda]{catscore}}.}
 
 
 \references{

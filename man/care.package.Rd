@@ -32,6 +32,6 @@ variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
 }
 \keyword{multivariate}
 \seealso{
-\code{\link{carscore}}, \code{\link{slm}}, \code{\link{slm.models}}, 
+\code{\link{carscore}}, \code{\link{slm}}, 
  \code{\link{efron2004}}, \code{\link{lu2004}}.
 }

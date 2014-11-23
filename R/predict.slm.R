@@ -1,8 +1,8 @@
-### predict.slm.R  (2011-07-03)
+### predict.slm.R  (2014-11-22)
 ###
 ###    Prediction from linear model
 ###
-### Copyright 2011 Korbinian Strimmer
+### Copyright 2011-14 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `sda' library for R and related languages.
@@ -36,21 +36,28 @@ predict.slm = function(object, Xtest, verbose=TRUE, ...)
   
   if (!is.matrix(Xtest)) stop("Test data must be given as matrix!")
   ntest = nrow(Xtest) # number of test samples
-  npredTest = ncol(Xtest) # number of predictor variables in test data set
-  npred =  length(object$coefficients)-1 # number of predictor variables 
+  nvtest = ncol(Xtest) # number of of variables in test data set
+  ncoeff =  ncol(object$coefficients)-1 # number of coefficients
 
-  if (npred != npredTest)
-    stop("Different number of predictors in slm object (", 
-         npred, ") and in test data (", 
-         npredTest, ")", sep="")
+  if (ncoeff != nvtest)
+    stop("Incompatible number of variables in test data set (", nvtest,
+          ") and number of coefficients in slm object (", ncoeff, ")", sep="")
 
-  if (verbose) cat("Prediction uses", npred, "variables.\n")
+  m = length(object$numpred)
+  yhat = matrix(0, nrow=ntest, ncol=m)
+  colnames(yhat) = names(object$numpred)
+  rownames(yhat) = rownames(Xtest)
 
-  b = matrix(object$coefficients[-1]) 
-  b0 = object$coefficients[1]
+  for (i in 1:m)
+  {
+    if (verbose) cat("Prediction uses", object$numpred[i], "variables.\n")
 
-  yhat =  b0 + Xtest %*% b 
- 
+    b = matrix(object$coefficients[i, -1]) 
+    b0 = object$coefficients[i, 1]
+
+    yhat[,i] =  b0 + Xtest %*% b 
+
+  }
   return( yhat )
 }
 

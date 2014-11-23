@@ -3,11 +3,19 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.7:
+
+- slm() and slm.models() have been merged into a single function,
+  with slm.models() removed.  Correspondingly, the "slm" object 
+  returned by slm() now may contain several models.
+- predict.slm() has been changed accordingly. 
+- slm() now also works if there are no predictors.
+
 Version 1.1.6:
 
 - the example R scripts (brain and diabetes data) are now provided in 
-  R notebook format
-- change of maintainer email address
+  R notebook format.
+- change of maintainer email address.
 
 
 Version 1.1.5:

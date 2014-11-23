@@ -1,24 +1,32 @@
 \name{slm}
 \alias{slm}
 \alias{predict.slm}
+\alias{make.predlist}
 
 
 \title{Shrinkage Estimation of Regression Coefficients}
 \description{
   \code{slm} fits a linear model and computes
  (standardized) regression coefficients by plugin of shrinkage estimates of correlations and variances.
+ Using the argument \code{predlist} several models can be fitted on the same data set.
  
+ \code{make.predlist} constructs a \code{predlist} argument for use with \code{slm}.
+
 }
 
 \usage{
-slm(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
+slm(Xtrain, Ytrain, predlist, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
 \method{predict}{slm}(object, Xtest, verbose=TRUE, ...)
+make.predlist(ordering, numpred, name="SIZE")
 }
 
 \arguments{
    \item{Xtrain}{Matrix of predictors (columns correspond to variables).}
   
   \item{Ytrain}{Univariate continous response variable.}
+
+ \item{predlist}{A list specifying the predictors to be included when fitting the linear regression.  Each entry in the list is a vector containing the indices of variables used per model. If left unspecified single full-sized model using all variables in Xtrain is assumed. For a given ordering of covariables a suitable \code{predlist} can be generated  using the helper function \code{\link{make.predlist}} - see examples below.
+	     }
   
   \item{lambda}{The correlation shrinkage intensity (range 0-1).  
           If not specified (the default) it is estimated using an
@@ -46,6 +54,17 @@ slm(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
                 the rows correspond to observations and the columns
                 to variables.}
     \item{...}{Additional arguments for generic predict.}
+
+ \item{ordering}{The ordering of the predictors (most important predictors are first).
+	     }
+
+
+ \item{numpred}{The number of included predictors (may be a scalar or a vector). The predictors
+               are included in the order specified by \code{ordering}.
+	     }
+
+ \item{name}{The name assigned to each model is \code{name} plus "." and the number of included predictors.
+	     }
   
 }
 \details{
@@ -64,14 +83,15 @@ slm(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
 
   \code{regularization}: The shrinkage intensities used for estimating correlations and variances.
 
-  \code{diagonal}: Whether or not the correlations among predictors were set to zero.
-
   \code{std.coefficients}: The standardized regression coefficients, i.e. the regression coefficients
            computed from centered and standardized input data.  Thus, by construction the intercept is zero.
            Furthermore, for \code{diagonal=TRUE} the standardized regression coefficient for each predictor is
            identical to the respective marginal correlation.
 
   \code{coefficients}: Regression coefficients.
+
+  \code{numpred}: The number of predictors used in each investigated model.
+
 
   \code{R2}: For \code{diagonal=TRUE} this is the multiple correlation coefficient 
              between the response and the predictor, or the proportion of explained variance, with range
@@ -97,7 +117,7 @@ Sch\"afer, J., and K. Strimmer. 2005.  A shrinkage approach to
  genomics.  Statist. Appl. Genet. Mol. Biol. 4: 32.  
  (\url{http://www.bepress.com/sagmb/vol4/iss1/art32/})
 }
-\seealso{\code{\link{carscore}}, \code{\link{slm.models}}}
+\seealso{\code{\link{carscore}} }
 
 \examples{
 # load care library
@@ -112,6 +132,7 @@ x = efron2004$x
 y = efron2004$y
 n = dim(x)[1]
 d = dim(x)[2]
+xnames = colnames(x)
 
 # empirical regression coefficients
 fit = slm(x, y, lambda=0, lambda.var=0)
@@ -125,7 +146,7 @@ df = n-d-1
 pcor = pcor.shrink(cbind(y,x), lambda=0)[-1,1] 
 t = pcor * sqrt(df/(1-pcor^2))
 t.pval = 2 - 2 * pt(abs(t), df)
-b = fit$coefficients[-1]
+b = fit$coefficients[1,-1]
 cbind(b, pcor, t, t.pval)
 
 # compare results with those from lm function
@@ -135,6 +156,48 @@ summary(lm.out)
 # prediction of fitted values at the position of the training data
 predict(fit, x)
 lm.out$fitted.values
+
+
+# ordering of the variables using squared empirical CAR score
+car = carscore(x, y, lambda=0)
+ocar = order(car^2, decreasing=TRUE)
+xnames[ocar]
+
+# CAR regression models with 5, 7, 9 included predictors
+car.predlist = make.predlist(ocar, numpred = c(5,7,9), name="CAR")
+car.predlist
+slm(x, y, car.predlist, lambda=0, lambda.var=0)
+
+
+# plot regression coefficients for all possible CAR models
+
+p=ncol(x)
+car.predlist = make.predlist(ocar, numpred = 1:p, name="CAR")
+cm = slm(x, y, car.predlist, lambda=0, lambda.var=0)
+bmat = cm$coefficients[,-1]
+bmat
+
+par(mfrow=c(2,1))
+
+plot(1:p, bmat[,1], type="l", 
+  ylab="estimated regression coefficients", 
+  xlab="number of included predictors", 
+  main="CAR Regression Models for Diabetes Data", 
+  xlim=c(1,p+1), ylim=c(min(bmat), max(bmat)))
+
+for (i in 2:p) lines(1:p, bmat[,i], col=i, lty=i)
+for (i in 1:p) points(1:p, bmat[,i], col=i)
+for (i in 1:p) text(p+0.5, bmat[p,i], xnames[i])
+
+plot(1:p, cm$R2, type="l", 
+  ylab="estimated R2",
+  xlab="number of included predictors",
+  main="Proportion of Explained Variance",
+  ylim=c(0,0.6))
+R2max = max(cm$R2)
+lines(c(1,p), c(R2max, R2max), col=2)
+
+par(mfrow=c(1,1))
 
 
 ## example with small number of samples and large dimension
@@ -147,6 +210,7 @@ fit = slm(lu2004$x, lu2004$y)
 fit
 fit$regularization
 
+# residuals
 predict(fit, lu2004$x)-lu2004$y
 
 }
