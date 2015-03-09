@@ -4,6 +4,7 @@ export(
 "predict.slm",
 "slm"
 )
+S3method("predict", "slm")
 import(
 "corpcor"
 )

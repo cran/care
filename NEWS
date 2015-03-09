@@ -3,6 +3,11 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.8:
+
+- fix "S3 generic/method consistency" NOTE raised by R-devel.
+
+
 Version 1.1.7:
 
 - slm() and slm.models() have been merged into a single function,
@@ -10,6 +15,7 @@ Version 1.1.7:
   returned by slm() now may contain several models.
 - predict.slm() has been changed accordingly. 
 - slm() now also works if there are no predictors.
+
 
 Version 1.1.6:
 
