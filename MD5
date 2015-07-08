@@ -1,6 +1,6 @@
-484ce8d1c4a66ac98648bd95457469e5 *DESCRIPTION
-0df4e44ced59af35548451f0a750fe91 *NAMESPACE
-48a93522f948a708e0c53b81d1564838 *NEWS
+806de7bbdbdc6a3b317a7f937b906bac *DESCRIPTION
+d51d86bb51de4b12db1000c276534da9 *NAMESPACE
+2e52e9742189677a2f223b027411794f *NEWS
 3a31a7ba4db8d589092b1a5c1ac22d91 *R/carscore.R
 da77e6e20ce506b6b13d436c217b94e4 *R/predict.slm.R
 8b5db9fbb4d91a2da55289214264dbc8 *R/slm.R
@@ -12,6 +12,6 @@ b6eabc7237299c496cfce3cb9da9a013 *inst/doc/index.html
 b3796fca9e830de71c81a0812af88a25 *man/care-internal.Rd
 fb9f25e6afa0895e59484ff641ea53e3 *man/care.package.Rd
 a260c24d726a0ee4e28b2bff59019965 *man/carscore.Rd
-3df557504149578b70232a2bbeaa12c5 *man/efron2004.Rd
+19940c962d494b6bb4b7d03e9d23b576 *man/efron2004.Rd
 a4c70fb03c2b87495af0e28cd3c7e5b9 *man/lu2004.Rd
 3f67e0efb2334e553fdfed07ff5f3b2a *man/slm.Rd

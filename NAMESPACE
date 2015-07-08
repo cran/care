@@ -5,7 +5,6 @@ export(
 "slm"
 )
 S3method("predict", "slm")
-import(
-"corpcor"
-)
+import("corpcor")
+import("stats")
 

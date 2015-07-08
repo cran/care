@@ -24,7 +24,7 @@ the means of all variables are zero, and all variances are equal to one.
 
 \source{
 The orginal data are available in the lars R package, 
-see \url{http://cran.r-project.org/web/packages/lars/}. Note that this
+see \url{http://cran.r-project.org/package=lars}. Note that this
 uses a slightly different standardization.
 }
 
