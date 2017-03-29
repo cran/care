@@ -1,8 +1,8 @@
-### predict.slm.R  (2014-11-22)
+### predict.slm.R  (2017-03-28)
 ###
 ###    Prediction from linear model
 ###
-### Copyright 2011-14 Korbinian Strimmer
+### Copyright 2011-17 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `sda' library for R and related languages.
@@ -48,6 +48,10 @@ predict.slm = function(object, Xtest, verbose=TRUE, ...)
   colnames(yhat) = names(object$numpred)
   rownames(yhat) = rownames(Xtest)
 
+  predsd = matrix(0, nrow=1, ncol=m)
+  colnames(predsd) = names(object$numpred)
+  rownames(predsd) = NULL
+
   for (i in 1:m)
   {
     if (verbose) cat("Prediction uses", object$numpred[i], "variables.\n")
@@ -56,8 +60,11 @@ predict.slm = function(object, Xtest, verbose=TRUE, ...)
     b0 = object$coefficients[i, 1]
 
     yhat[,i] =  b0 + Xtest %*% b 
-
+    predsd[,i] =  object$sd.resid[i] 
   }
+
+  attr(yhat, "sd") = predsd
+
   return( yhat )
 }
 

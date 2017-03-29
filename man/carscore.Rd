@@ -61,7 +61,7 @@ carscore(Xtrain, Ytrain, lambda, diagonal=FALSE, verbose=TRUE)
 
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
 variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
-\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
+<DOI:10.2202/1544-6115.1730>
 }
 
 

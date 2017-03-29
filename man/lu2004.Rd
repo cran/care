@@ -26,18 +26,18 @@ the age of each patient is provided.
 }
 
 \source{
-The orginal data are available from \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1572} and are described in Lu et al. (2004).
+The original data are available from \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1572} and are described in Lu et al. (2004).
 The selected 403 genes result from prescreening and preprocessing as
 described in Zuber and Strimmer (2011). 
 }
 
 \references{
 Lu, T., et al. 2004. Gene regulation and DNA damage in the ageing human brain.
-Nature 429:883--891.
+Nature 429:883--891. <DOI:10.1038/nature02661>
 
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
 variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
-\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
+<DOI:10.2202/1544-6115.1730>
 }
 
 

@@ -3,7 +3,15 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
-Version 1.1.8:
+Version 1.1.10:
+
+- slm() now also reports the unexplained residual error.
+- predict.slm() now reports the standard deviation
+  of the predictive distribution (attached as attribute "sd").
+- added DOIs for all references.
+
+
+Version 1.1.9:
 
 - added import statements required by R-devel.
 

@@ -1,10 +1,10 @@
 
-### slm.R  (2014-11-22)
+### slm.R  (2017-03-28)
 ###
 ###    Fit regression coefficients by plugin of (shrinkage or empirical) 
 ###    estimates of correlations and variances
 ###
-### Copyright 2006-2014 Korbinian Strimmer
+### Copyright 2006-2017 Korbinian Strimmer
 ###
 ###
 ### This file is part of the `care' library for R and related languages.
@@ -27,6 +27,7 @@
 
 slm = function(Xtrain, Ytrain, predlist, lambda, lambda.var, diagonal=FALSE, verbose=TRUE)
 {
+  Xtrain = as.matrix(Xtrain)
   d = dim(Xtrain)[2]
 
   if( missing(predlist) ) 
@@ -40,6 +41,7 @@ slm = function(Xtrain, Ytrain, predlist, lambda, lambda.var, diagonal=FALSE, ver
   m = length(predlist)
   numpred = sapply(predlist, length)
   R2 = numeric(m)
+  sd.resid = numeric(m)
   coeff = matrix(0, nrow=m, ncol=d+1) # plus intercept
   std.coeff = matrix(0, nrow=m, ncol=d+1) # plus intercept
   reg = matrix(0, nrow=m, ncol=2)
@@ -57,6 +59,7 @@ slm = function(Xtrain, Ytrain, predlist, lambda, lambda.var, diagonal=FALSE, ver
   colnames(std.coeff) = c("(Intercept)", xnames)
 
   names(R2) = modelnames
+  names(sd.resid) = modelnames
   names(numpred) = modelnames
   colnames(reg) = c("lambda", "lambda.var")
   rownames(reg) = modelnames 
@@ -77,12 +80,13 @@ slm = function(Xtrain, Ytrain, predlist, lambda, lambda.var, diagonal=FALSE, ver
     std.coeff[i, 1] = fit$std.coefficients[1] # intercept
 
     R2[i] = fit$R2
+    sd.resid[i] = fit$sd.resid
 
     reg[i,] = fit$regularization
   }
 
   res = list(regularization=reg, std.coefficients=std.coeff, 
-             coefficients=coeff, numpred=numpred, R2=R2)
+             coefficients=coeff, numpred=numpred, R2=R2, sd.resid=sd.resid)
   class(res) = "slm"
 
   return(res)
@@ -127,8 +131,6 @@ slm.internal = function(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verb
   
   regularization = c(lambda, lambda.var)
   names(regularization) = c("lambda", "lambda.var")
-  sdy = sqrt(v[1])
-  sdx = sqrt(v[-1])
 
   if (diagonal || d==0)
   {
@@ -142,8 +144,11 @@ slm.internal = function(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verb
   R2 = as.vector(crossprod(mcor, bstd))   # proportion of explained variance  (diagonal=FALSE)
                                           # or sum of squared marginal correlations (diagonal=TRUE)
 
-  b = bstd*sdy/sdx                   # regression coefficients
-  a = mu[1] - sum(b * mu[-1])        # intercept
+  sdy = sqrt(v[1])
+  sdx = sqrt(v[-1])
+  b = bstd*sdy/sdx                 # regression coefficients
+  a = mu[1] - sum(b * mu[-1])      # intercept
+  sd.resid = sdy*sqrt(1-R2)        # unexplained residual error
 
   coefficients = c(a, b)
   xnames = colnames(Xtrain)
@@ -156,9 +161,8 @@ slm.internal = function(Xtrain, Ytrain, lambda, lambda.var, diagonal=FALSE, verb
 
   res = list(regularization=regularization,
           std.coefficients=std.coefficients,
-          coefficients=coefficients, R2=R2) 
+          coefficients=coefficients, R2=R2, sd.resid=sd.resid) 
   
-
   return( res )
 }
 

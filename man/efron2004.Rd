@@ -24,13 +24,11 @@ the means of all variables are zero, and all variances are equal to one.
 
 \source{
 The orginal data are available in the lars R package, 
-see \url{http://cran.r-project.org/package=lars}. Note that this
-uses a slightly different standardization.
+see \url{https://cran.r-project.org/package=lars}. Note that this uses a slightly different standardization.
 }
 
 \references{
-Efron, B., et al. 2004. Least angle regression (with discussion).
-Ann. Statist. 32:407--499.
+Efron, B., et al. 2004. Least angle regression (with discussion). Ann. Statist. 32:407--499. <DOI:10.1214/009053604000000067>
 }
 
 

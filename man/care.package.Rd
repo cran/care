@@ -26,9 +26,9 @@ The name of the package refers to \bold{CAR}
   
 Zuber, V., and K. Strimmer. 2011.  High-dimensional regression and 
 variable selection using CAR scores.  Statist. Appl. Genet. Mol. Biol. 10: 34.
-\url{http://www.bepress.com/sagmb/vol10/iss1/art34/}
+<DOI:10.2202/1544-6115.1730>
 
-  Website: \url{http://strimmerlab.org/software/care/}
+Website: \url{http://strimmerlab.org/software/care/}
 }
 \keyword{multivariate}
 \seealso{

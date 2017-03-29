@@ -98,6 +98,13 @@ make.predlist(ordering, numpred, name="SIZE")
              from 0 to 1.
              For \code{diagonal=TRUE} this equals the sum of squared marginal
               correlations.  Note that this sum may be larger than 1!
+
+  \code{sd.resid}: The residual unexplained error.
+
+  \code{predict.slm} returns the means predicted for each sample and model as well as the corresponding
+         predictive standard deviations (attached as attribute "sd").
+
+
 }
 \author{
   Korbinian Strimmer (\url{http://strimmerlab.org}).
@@ -108,14 +115,11 @@ make.predlist(ordering, numpred, name="SIZE")
  Opgen-Rhein, R., and K. Strimmer. 2007.
  From correlation to causation networks: a simple approximate learning 
  algorithm and its   application to high-dimensional plant gene expression data.
- BMC Syst. Biol. 1: 37. 
- (\url{http://www.biomedcentral.com/1752-0509/1/37/abstract})
-
+ BMC Syst. Biol. 1: 37.  <DOI:10.1186/1752-0509-1-37>
 
 Sch\"afer, J., and K. Strimmer. 2005.  A shrinkage approach to
  large-scale covariance estimation and implications for functional
- genomics.  Statist. Appl. Genet. Mol. Biol. 4: 32.  
- (\url{http://www.bepress.com/sagmb/vol4/iss1/art32/})
+ genomics.  Statist. Appl. Genet. Mol. Biol. 4: 32.  <DOI:10.2202/1544-6115.1175>
 }
 \seealso{\code{\link{carscore}} }
 
@@ -154,8 +158,11 @@ lm.out = lm(y ~ x)
 summary(lm.out)
 
 # prediction of fitted values at the position of the training data
-predict(fit, x)
 lm.out$fitted.values
+mu.hat = predict(fit, x) # precticted means
+mu.hat
+attr(mu.hat, "sd") # predictive error
+sd(y-mu.hat)
 
 
 # ordering of the variables using squared empirical CAR score
@@ -208,10 +215,6 @@ dim(lu2004$x)    # 30 403
 
 fit = slm(lu2004$x, lu2004$y)
 fit
-fit$regularization
-
-# residuals
-predict(fit, lu2004$x)-lu2004$y
 
 }
 \keyword{multivariate}
