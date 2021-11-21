@@ -26,7 +26,7 @@ the age of each patient is provided.
 }
 
 \source{
-The original data are available from \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1572} and are described in Lu et al. (2004).
+The original data are available from the GEO public functional genomics database at URL \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1572} and are described in Lu et al. (2004).
 The selected 403 genes result from prescreening and preprocessing as
 described in Zuber and Strimmer (2011). 
 }

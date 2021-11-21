@@ -1,6 +1,6 @@
-c1e7028b8caee462fc8a431593540730 *DESCRIPTION
+6f469e9221de8fc134e3a802a36bbf04 *DESCRIPTION
 d51d86bb51de4b12db1000c276534da9 *NAMESPACE
-49548a6108c80c45c6857b4783fa03c4 *NEWS
+14d3f13ddced7339fbf2505cf15bf15f *NEWS
 3a31a7ba4db8d589092b1a5c1ac22d91 *R/carscore.R
 cd27277fa5af74981fb1645b84369002 *R/predict.slm.R
 e696a06136ecdd42cf70034c1e648635 *R/slm.R
@@ -10,8 +10,8 @@ e696a06136ecdd42cf70034c1e648635 *R/slm.R
 5f82ba5d8f882f72249c0acbb710f735 *inst/doc/diabetes.R
 b6eabc7237299c496cfce3cb9da9a013 *inst/doc/index.html
 b3796fca9e830de71c81a0812af88a25 *man/care-internal.Rd
-a8dfd014673cce7c7f86b0f932e88d5a *man/care.package.Rd
-9c7033aa954af83719b17a97a5e31926 *man/carscore.Rd
+79e1771fe33bca3be6e33586c3a4b868 *man/care.package.Rd
+f15b12d0751cf07e68fb418394ebd29c *man/carscore.Rd
 ad31d6ccde91a9e994ea622fffea88f1 *man/efron2004.Rd
-fad50f9ba5fbed53e6905a6c12e76cbb *man/lu2004.Rd
-f4d675cdb0d1d2f44d202f83bd5cbbaa *man/slm.Rd
+5766d80271376356f93b71c43dce76a3 *man/lu2004.Rd
+d54018ec21d740c29583b25cdd8846a7 *man/slm.Rd

@@ -107,7 +107,7 @@ make.predlist(ordering, numpred, name="SIZE")
 
 }
 \author{
-  Korbinian Strimmer (\url{http://strimmerlab.org}).
+  Korbinian Strimmer (\url{https://strimmerlab.github.io}).
   
 }
 \references{

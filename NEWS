@@ -3,6 +3,11 @@
            RELEASE HISTORY OF THE "care" PACKAGE
 
 
+Version 1.1.11:
+
+- updated URLs.
+
+
 Version 1.1.10:
 
 - slm() now also reports the unexplained residual error.
